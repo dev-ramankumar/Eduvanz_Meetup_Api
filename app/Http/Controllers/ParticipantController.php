@@ -88,14 +88,14 @@ class ParticipantController extends Controller
             $participant = Participant::where('id', $id)->first();
             if ($participant) {
                 $input = $request->all();
-                $input['profession'] = $request->profession ? (strtolower($request->profession) == "employed" ? 0 : 1) : $participant->profession;
-                $participant->name = $input['name'] ?? $participant->name;
-                $participant->age = $input['age'] ?? $participant->age;
-                $participant->dob = $input['dob'] ?? $participant->dob;
-                $participant->profession = $input['profession'] ?? $participant->profession;
-                $participant->locality = $input['locality'] ?? $participant->locality;
-                $participant->no_of_guests = $input['no_of_guests'] ?? $participant->no_of_guests;
-                $participant->address = $input['address'] ?? $participant->address;
+                $input['profession'] = strtolower($request->profession) == "employed" ? 0 : 1;
+                $participant->name = $input['name'];
+                $participant->age = $input['age'];
+                $participant->dob = $input['dob'];
+                $participant->profession = $input['profession'];
+                $participant->locality = $input['locality'];
+                $participant->no_of_guests = $input['no_of_guests'];
+                $participant->address = $input['address'];
                 $participant->save();
                 return response()->json(['status' => Response::HTTP_OK, 'message' => "Participant data update successfully"], Response::HTTP_OK);
             } else {
