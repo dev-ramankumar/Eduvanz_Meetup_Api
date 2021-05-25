@@ -35,7 +35,7 @@ class ParticipantController extends Controller
             'name' => 'required|string|min:1|max:255',
             'age' => 'required|min:0|max:128',
             'dob' => 'required|date',
-            'profession' => 'required|in:employed,student',
+            'profession' => 'required|in:0,1',
             'locality' => 'required|string|min:1|max:255',
             'no_of_guests' => 'required|in:0,1,2',
             'address' => 'required|string|max:50'
@@ -46,7 +46,7 @@ class ParticipantController extends Controller
                 'name' => trim($request->name),
                 'age' => trim($request->age),
                 'dob' => trim($request->dob),
-                'profession' => strtolower($request->profession) == "employed" ? 0 : 1,
+                'profession' => $request->profession,
                 'locality' => trim($request->locality),
                 'no_of_guests' => $request->no_of_guests,
                 'address' => $request->address
@@ -78,7 +78,7 @@ class ParticipantController extends Controller
             'name' => 'required|string|min:1|max:255',
             'age' => 'required|min:0|max:128',
             'dob' => 'required|date',
-            'profession' => 'required|in:employed,student',
+            'profession' => 'required|in:0,1',
             'locality' => 'required|string|min:1|max:255',
             'no_of_guests' => 'required|in:0,1,2',
             'address' => 'required|string|max:50'
@@ -88,7 +88,6 @@ class ParticipantController extends Controller
             $participant = Participant::where('id', $id)->first();
             if ($participant) {
                 $input = $request->all();
-                $input['profession'] = strtolower($request->profession) == "employed" ? 0 : 1;
                 $participant->name = $input['name'];
                 $participant->age = $input['age'];
                 $participant->dob = $input['dob'];
